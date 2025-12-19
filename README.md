@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+🌫️ Bruma — Recetas con alma
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bruma es una web de recetas honesta, artística y colaborativa, diseñada para personas que cocinan con curiosidad y sin prisa. No solo muestra recetas: cuenta historias, comparte errores, y permite que la comunidad participe y aprenda junta.
 
-Currently, two official plugins are available:
+🎨 Estética
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Inspiración rústica y artesanal
 
-## React Compiler
+Paleta de colores cálida con acentos vibrantes
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Tipografías con carácter humano
 
-## Expanding the ESLint configuration
+Diseño adaptable a modo claro y oscuro
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Layout editorial, limpio y visualmente atractivo
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+🏠 Características principales
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Home: Hero con mensaje emocional y ritmo visual
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Recetas destacadas: Sección editorial con imágenes y detalles clave (tiempo, nivel, descripción)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Mosaico de imágenes: Layout dinámico y uniforme de la comunidad
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Modo Cocina: Pantalla completa, pasos claros, botones grandes y temporizadores
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Blog/Comunidad: Publicaciones de usuarios, comentarios, reacciones simples
+
+IA de cocina: Chat integrado para dudas y consejos prácticos
+
+Usuarios y perfiles: Login, historial, recetas favoritas
+
+💻 Tecnología
+
+Frontend: React + Vite + TypeScript
+
+Estilos: Tailwind CSS
+
+Componentización: Componentes reutilizables y escalables
+
+Preparada para integraciones futuras de backend, autenticación y AI
