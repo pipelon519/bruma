@@ -5,12 +5,12 @@ type Category = {
   }
   
   const categories: Category[] = [
-    { name: "Postres", image: "src/assets/img10.jpg", accent: "bg-[#7AD0AC]" },
-    { name: "Pastas", image: "src/assets/img7.jpg", accent: "bg-[#F87171]" },
-    { name: "Ensaladas", image: "src/assets/img11.jpg", accent: "bg-[#A3B18A]" },
-    { name: "Sopas", image: "src/assets/img12.jpg", accent: "bg-[#7AD0AC]" },
-    { name: "Snacks", image: "src/assets/img13.jpg", accent: "bg-[#F87171]" },
-    { name: "Bebidas", image: "src/assets/img6.jpg", accent: "bg-[#A3B18A]" },
+    { name: "Postres", image: "./assets/img10.jpg", accent: "bg-[#7AD0AC]" },
+    { name: "Pastas", image: "./assets/img7.jpg", accent: "bg-[#F87171]" },
+    { name: "Ensaladas", image: "./assets/img11.jpg", accent: "bg-[#A3B18A]" },
+    { name: "Sopas", image: "./assets/img12.jpg", accent: "bg-[#7AD0AC]" },
+    { name: "Snacks", image: "./assets/img13.jpg", accent: "bg-[#F87171]" },
+    { name: "Bebidas", image: "./assets/img6.jpg", accent: "bg-[#A3B18A]" },
   ];
   import CategoriesHeader from "./components/categoriesheader";
   import Footer from "./components/footer";
