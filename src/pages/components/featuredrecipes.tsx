@@ -1,6 +1,6 @@
-import img7 from "/assets/img7.jpg";
-import img8 from "/assets/img8.jpg";
-import img9 from "/assets/img9.jpg";
+import img7 from "./assets/img7.jpg";
+import img8 from "./assets/img8.jpg";
+import img9 from "./assets/img9.jpg";
 
 type Recipe = {
     title: string

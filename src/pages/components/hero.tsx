@@ -1,4 +1,4 @@
-import plato1 from "/assets/plato1.png";
+import plato1 from "./assets/plato1.png";
 
 export default function Hero() {
   return (
