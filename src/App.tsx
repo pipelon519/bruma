@@ -1,23 +1,14 @@
-import Header from "./components/header";
-import Hero from "./components/hero";
-import IntroGrid from "./components/introgrid"
-import ImageMosaic from "./components/imagemosaic";
-import FeaturedRecipes from "./components/featuredrecipes";
-import LoginSection from "./components/loginsection";
-
-
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/home";
+import Categories from "./pages/categories";
 
 function App() {
   return (
-    <>
-    <Header />
-    <Hero /> 
-    <IntroGrid />
-    <ImageMosaic/>
-    <FeaturedRecipes/>
-    <LoginSection/>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/categories" element={<Categories />} />
+    </Routes>
   );
 }
 
-export default App
+export default App;
