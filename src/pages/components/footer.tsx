@@ -3,13 +3,7 @@ export default function Footer() {
       <footer className="relative bg-gray-900 text-white/80 py-24 mt-3 rounded-tl-3xl rounded-tr-3xl">
         
         {/* Fondo pincel */}
-        <div className="absolute inset-0 -z-10">
-          <img
-            src="/assets/brush-footer.svg"
-            alt=""
-            className="w-full h-full object-cover opacity-20"
-          />
-        </div>
+        <div className="absolute inset-0 -z-10"></div>
   
         <div className="mx-auto max-w-6xl px-6 grid grid-cols-1 md:grid-cols-3 gap-16">
   

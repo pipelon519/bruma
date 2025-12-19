@@ -1,3 +1,5 @@
+import plato1 from "/assets/plato1.png";
+
 export default function IntroGrid() {
     return (
       <section className="bg-[var(--bg2)] py-24 h-full rounded-4xl ml-2 mr-2 mt-2">
@@ -15,7 +17,7 @@ export default function IntroGrid() {
           <div className="grid gap-8 md:grid-cols-3">
   
             <div className="rounded-3xl bg-[var(--tarjeta-2)] p-8">
-              <img src="src/assets/plato1.png" alt="" />
+              <img src={plato1} alt="" />
               <h3 className="text-2xl font-bold text-center">Explorar</h3>
               <p className="mt-3 opacity-70">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque, molestiae! Voluptatum voluptas corporis culpa consequuntur.
@@ -23,7 +25,7 @@ export default function IntroGrid() {
             </div>
   
             <div className="rounded-3xl bg-[var(--tarjeta-1)] p-8">
-              <img src="src/assets/plato1.png" alt="" />
+              <img src={plato1} alt="" />
               <h3 className="text-2xl font-bold text-center">preguntar</h3>
               <p className="mt-3 opacity-70">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque laborum fugiat magnam temporibus eum ut.
@@ -31,7 +33,7 @@ export default function IntroGrid() {
             </div>
   
             <div className="rounded-[10%] bg-[var(--tarjeta-2)] bg-600 p-8">
-              <img src="src/assets/plato1.png" alt="" />
+              <img src={plato1} alt="" />
               <h3 className="text-2xl font-bold text-center">compartir</h3>
               <p className="mt-3 opacity-70">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque non doloribus expedita! Earum, similique rerum?

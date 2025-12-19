@@ -1,3 +1,5 @@
+import plato1 from "/assets/plato1.png";
+
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
@@ -24,7 +26,7 @@ export default function Hero() {
 
           <div className="relative h-[420px] flex items-center justify-center">
               <div className="absolute w-100 h-100 rounded-full bg-black/15 dark:bg-white/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              <img src="src/assets/plato1.png" alt="" className="relative z-10 w-full w-150" />
+              <img src={plato1} alt="" className="relative z-10 w-full w-150" />
           </div>
         </div>
       </div>

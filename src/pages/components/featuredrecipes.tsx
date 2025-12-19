@@ -1,3 +1,7 @@
+import img7 from "/assets/img7.jpg";
+import img8 from "/assets/img8.jpg";
+import img9 from "/assets/img9.jpg";
+
 type Recipe = {
     title: string
     description: string
@@ -13,7 +17,7 @@ type Recipe = {
         "una receta sencilla para cuando quieres comer bien sin pensar demasiado",
       time: "25 min",
       level: "fácil",
-      image: "src/assets/img7.jpg",
+      image: img7,
     },
     {
       title: "arroz chino casero",
@@ -21,7 +25,7 @@ type Recipe = {
         "con paciencia, fuego medio y errores que también cuentan",
       time: "45 min",
       level: "media",
-      image: "src/assets/img8.jpg",
+      image: img8,
     },
     {
       title: "bocados de pan",
@@ -29,7 +33,7 @@ type Recipe = {
         "sin horno, sin drama y con olor a casa",
       time: "20 min",
       level: "fácil",
-      image: "src/assets/img9.jpg",
+      image: img9,
     },
   ]
   
