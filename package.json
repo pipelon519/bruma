@@ -1,6 +1,6 @@
 {
   "name": "bruma",
-  "private": "false",
+  "private": false,
   "version": "1.0.0",
   "homepage": "https://pipelon519.github.io/bruma",
   "type": "module",
@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -34,5 +36,4 @@
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4"
   }
-  
 }
