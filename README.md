@@ -101,6 +101,5 @@ vite.config.ts
 
 Si quieres hablar de recetas, diseño o simplemente decir que te gusta Bruma:
 
-- **Email:** contacto@bruma.com  
-- **Twitter/Instagram:** @bruma_recetas
+- **Email:** tsamu519@gmail.com  
 
