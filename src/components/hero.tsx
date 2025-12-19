@@ -1,26 +1,23 @@
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
-      
-      {/* Fondo con pincel */}
-      <div className="absolute inset-0 bg-[var(--accent)]"></div>
+    
+      <div className="absolute inset-0 bg-[var(--accent)] rounded-4xl ml-2 mr-2"></div>
 
-      {/* Contenido */}
       <div className="relative z-10 mx-auto max-w-6xl px-6 py-32">
         <div className="grid md:grid-cols-2 gap-16 items-center">
 
           <div>
-            <h1 className="font-serif text-8xl md:text-6xl leading-tight">
-              Cocinar también <br /> es contar algo
-            </h1>
-           
-
+            <p className="font-serif text-2xl md:text-4xl leading-tight">
+              Cocina con calma y encuentra tu<br />
+              <h1 className="font-serif text-6xl md:text-8xl leading-tight font-light">Ingrediente</h1> 
+            </p>
 
             <p className="mt-6 max-w-md text-lg opacity-80">
               recetas reales, errores honestos y preguntas que se hacen sin prisa
             </p>
 
-            <button className="mt-10 inline-block rounded-full bg-[var(--bg)] px-8 py-4 text-sm font-medium tracking-wide">
+            <button className="mt-10 inline-block rounded-full bg-[var(--bg)] px-8 py-4 text-xl font-medium hover:bg-[var(--tarjeta-1)] hover:font-bold  text-[var(--text)] tracking-wide transition-all transform hover:scale-105">
               explorar recetas
             </button>
           </div>

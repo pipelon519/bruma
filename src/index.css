@@ -3,12 +3,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Aladin&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rakkas&display=swap');
 :root {
-  --bg: #f4f1ec;
+  --bg: #ffeed1;
+  --bg2: #ffc46c;
   --text: #3a2e2a;
   --accent: #4e7c78;
+  --tarjeta-1: #596ab4;
+  --tarjeta-2: #7faeaa;
 }
-h1{
+body{
+  background-color: var(--bg);
+  color: var(--text);
+}
+h1, h2 {
   font-family: "modak",sans-serif;
+}
+h3, h4{
+  font-family: "aladin",sans-serif;
 }
 p{
   font-family: "aladin",sans-serif;
