@@ -1,41 +1,106 @@
-🌫️ Bruma — Recetas con alma
+# 🌫️ Bruma — Recetas con alma
 
-Bruma es una web de recetas honesta, artística y colaborativa, diseñada para personas que cocinan con curiosidad y sin prisa. No solo muestra recetas: cuenta historias, comparte errores, y permite que la comunidad participe y aprenda junta.
+Bruma es una web de recetas **honesta, artística y colaborativa**, diseñada para personas que cocinan con curiosidad y sin prisa. No solo muestra recetas: cuenta historias, comparte errores, y permite que la comunidad participe y aprenda junta.
 
-🎨 Estética
+---
 
-Inspiración rústica y artesanal
+## 🎨 Estética
 
-Paleta de colores cálida con acentos vibrantes
+- Inspiración rústica y artesanal
+- Paleta de colores cálida con acentos vibrantes
+- Tipografías con carácter humano
+- Diseño adaptable a modo claro y oscuro
+- Layout editorial, limpio y visualmente atractivo
 
-Tipografías con carácter humano
+---
 
-Diseño adaptable a modo claro y oscuro
+## 🏠 Características principales
 
-Layout editorial, limpio y visualmente atractivo
+- **Home**: Hero con mensaje emocional y ritmo visual
+- **Recetas destacadas**: Sección editorial con imágenes y detalles clave (tiempo, nivel, descripción)
+- **Mosaico de imágenes**: Layout dinámico y uniforme de la comunidad
+- **Modo Cocina**: Pantalla completa, pasos claros, botones grandes y temporizadores
+- **Blog/Comunidad**: Publicaciones de usuarios, comentarios, reacciones simples
+- **IA de cocina**: Chat integrado para dudas y consejos prácticos
+- **Usuarios y perfiles**: Login, historial, recetas favoritas
 
-🏠 Características principales
+---
 
-Home: Hero con mensaje emocional y ritmo visual
+## 💻 Tecnología
 
-Recetas destacadas: Sección editorial con imágenes y detalles clave (tiempo, nivel, descripción)
+- **Frontend**: React + Vite + TypeScript
+- **Estilos**: Tailwind CSS
+- **Componentización**: Componentes reutilizables y escalables
+- Preparada para integraciones futuras de backend, autenticación y AI
 
-Mosaico de imágenes: Layout dinámico y uniforme de la comunidad
+---
 
-Modo Cocina: Pantalla completa, pasos claros, botones grandes y temporizadores
+## ⚡ Instalación y ejecución
 
-Blog/Comunidad: Publicaciones de usuarios, comentarios, reacciones simples
+1. Clona el proyecto:
 
-IA de cocina: Chat integrado para dudas y consejos prácticos
+```bash
+git clone https://github.com/tu-usuario/bruma.git
+cd bruma
+```
 
-Usuarios y perfiles: Login, historial, recetas favoritas
+2. Instala dependencias:
 
-💻 Tecnología
+```bash
+npm install
+```
 
-Frontend: React + Vite + TypeScript
+3. Ejecuta en desarrollo:
 
-Estilos: Tailwind CSS
+```bash
+npm run dev
+```
 
-Componentización: Componentes reutilizables y escalables
+4. Abre en tu navegador: `http://localhost:5173`
 
-Preparada para integraciones futuras de backend, autenticación y AI
+---
+
+## 📂 Estructura de carpetas
+
+```
+src/
+ ├─ components/       # Componentes reutilizables
+ ├─ assets/           # Imágenes y SVGs
+ ├─ App.tsx           # Componente raíz
+ ├─ main.tsx          # Punto de entrada
+public/
+ └─ index.html
+package.json
+tailwind.config.js
+postcss.config.js
+vite.config.ts
+```
+
+---
+
+## 🌱 Cómo contribuir
+
+1. Haz un fork del repositorio
+2. Crea una rama con tu feature: `git checkout -b feature/nombre`
+3. Realiza tus cambios y confirma: `git commit -m "Descripción"`
+4. Envía tu pull request
+
+---
+
+## 🎯 Próximos pasos / ideas futuras
+
+- Guardar recetas offline  
+- Colecciones personalizadas  
+- Animaciones sutiles en scroll  
+- Extensión a app móvil  
+- Integración con IA más avanzada  
+
+---
+
+## 💌 Contacto
+
+Si quieres hablar de recetas, diseño o simplemente decir que te gusta Bruma:
+
+- **Email:** contacto@bruma.com  
+- **Twitter/Instagram:** @bruma_recetas
+
