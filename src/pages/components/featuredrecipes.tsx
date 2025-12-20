@@ -1,9 +1,14 @@
 import { recipes } from "../../data/recipes"
+import { motion } from "framer-motion"
 
 
 export default function FeaturedRecipes() {
   return (
-    <section className="py-28 bg-[var(--bg)]">
+    <motion.section initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, ease: "easeOut" }}>
+        <section className="py-28 bg-[var(--bg)]">
       <div className="mx-auto max-w-6xl px-6">
 
         {/* Título */}
@@ -65,5 +70,7 @@ export default function FeaturedRecipes() {
 
       </div>
     </section>
+    </motion.section>
+  
   )
 }

@@ -1,30 +1,34 @@
 import { useParams } from "react-router-dom"
 import { recipes } from "../data/recipes"
-import RecipeCard from "./components/recipecard"
+import PageTransition from "./components/pagetransition"
+import RecipeCard from "./components/recipecard" // This was the missing import
 
-export default function Category() {
+export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>()
 
-  if (!slug) return <p>Categoría inválida</p>
+  if (!slug) {
+    return <p>Categoría no encontrada</p>
+  }
 
-  const filtered = recipes.filter(
-    r => r.category.toLowerCase() === slug.toLowerCase()
-  )
+  const filtered = recipes.filter(r => r.category === slug)
 
   return (
-    <section className="py-24 px-6 max-w-6xl mx-auto">
-      <h1 className="text-5xl mb-12 capitalize">{slug}</h1>
+    <PageTransition>
+      <section className="py-24 px-6 max-w-6xl mx-auto">
+        <h1 className="text-5xl mb-12 capitalize font-serif">
+          {slug.replace("-", " ")}
+        </h1>
 
-      {filtered.length === 0 ? (
-        <p>No hay recetas en esta categoría</p>
-      ) : (
-        <div className="grid md:grid-cols-3 gap-8">
-          {filtered.map(r => (
-            <RecipeCard key={r.id} recipe={r} />
-          ))}
-        </div>
-      )}
-    </section>
+        {filtered.length === 0 ? (
+          <p className="opacity-60">No hay recetas en esta categoría... todavía.</p>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filtered.map(r => (
+              <RecipeCard key={r.id} recipe={r} />
+            ))}
+          </div>
+        )}
+      </section>
+    </PageTransition>
   )
 }
-

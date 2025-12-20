@@ -4,10 +4,13 @@ import img3 from "/assets/img3.jpg";
 import img4 from "/assets/img4.jpg";
 import img5 from "/assets/img5.jpg";
 import img6 from "/assets/img6.jpg";
+import { motion } from "framer-motion"
 
 export default function ImageMosaic() {
     return (
-      <section className="py-24  bg-[var(--accent)] rounded-4xl ml-2 mr-2 mt-2">
+      <motion.section>
+
+        <section className="py-24  bg-[var(--accent)] rounded-4xl ml-2 mr-2 mt-2">
         <div className="mx-auto max-w-6xl px-6">
   
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
@@ -36,7 +39,8 @@ export default function ImageMosaic() {
           </div>
   
         </div>
-      </section>
+        </section>
+      </motion.section>
     )
   }
   

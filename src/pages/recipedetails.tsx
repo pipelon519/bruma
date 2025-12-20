@@ -1,47 +1,135 @@
-import { useParams } from "react-router-dom"
-import { recipes } from "../data/recipes"
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { supabase } from "../lib/supabase";
+import Footer from "./components/footer";
+import PageTransition from "./components/pagetransition";
+import Comments from "./components/comments"; // 1. Import the new Comments component
 
-export default function RecipeDetails() {
-  const { id } = useParams<{ id: string }>()
+// Define a type for the recipe object
+type Recipe = {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  time: string;
+  difficulty: string;
+  ingredients: string[]; // Stored as JSONB, parsed as string array
+  steps: string[]; // Stored as JSONB, parsed as string array
+  notes: string;
+};
 
-  const recipe = recipes.find(
-    r => r.id.toString() === id
-  )
+export default function RecipeDetail() {
+  const { id } = useParams<{ id: string }>();
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!recipe) {
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      if (!id) return;
+
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('recipes')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        if (error) {
+          throw new Error(`No se pudo encontrar la receta: ${error.message}`);
+        }
+
+        if (data) {
+          setRecipe(data);
+        } else {
+          throw new Error("Receta no encontrada.");
+        }
+
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecipe();
+  }, [id]);
+
+  if (loading) {
+    return <div className="text-center py-20">Cargando receta...</div>;
+  }
+
+  if (error || !recipe) {
     return (
-      <p className="text-center mt-24 opacity-60">
-        Receta no encontrada
-      </p>
-    )
+      <div className="text-center py-20 text-red-600">
+        <h1 className="text-2xl font-bold">Error</h1>
+        <p>{error || "No se pudo cargar la receta."}</p>
+      </div>
+    );
   }
 
   return (
-    <section className="py-24 px-6 max-w-4xl mx-auto">
-      <h1 className="text-5xl mb-6">{recipe.title}</h1>
+    <PageTransition>
+      <div className="bg-white pt-12 sm:pt-20">
+        <div className="mx-auto max-w-3xl px-6 lg:px-8">
+          
+          {/* Header */}
+          <div className="text-center mb-12">
+            <p className="text-base font-semibold leading-7 text-[var(--text)]-600">{recipe.difficulty} &middot; {recipe.time}</p>
+            <h1 className="mt-2 text-4xl tracking-tight text-gray-900 sm:text-5xl font-serif">
+              {recipe.title}
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
+              {recipe.description}
+            </p>
+          </div>
 
-      <img
-        src={recipe.image}
-        alt={recipe.title}
-        className="rounded-xl mb-8"
-      />
+          {/* Image */}
+          <div className="aspect-[16/9] sm:aspect-[2/1] lg:aspect-[3/2] w-full overflow-hidden rounded-2xl shadow-lg mb-12">
+            <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" />
+          </div>
 
-      <h2 className="text-2xl mb-4">Ingredientes</h2>
-      <ul className="list-disc pl-6 mb-8">
-        {recipe.ingredients.map((ing, i) => (
-          <li key={i}>{ing}</li>
-        ))}
-      </ul>
+          {/* Main Content: Ingredients & Steps */}
+          <div className="flex flex-col md:flex-row gap-12">
 
-      <h2 className="text-2xl mb-4">Pasos</h2>
-      <ol className="list-decimal pl-6">
-        {recipe.steps.map((step, i) => (
-          <li key={i} className="mb-2">
-            {step}
-          </li>
-        ))}
-      </ol>
-    </section>
-  )
+            {/* Ingredients */}
+            <div className="md:w-1/3">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">Ingredientes</h2>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                {recipe.ingredients.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Steps */}
+            <div className="md:w-2/3">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">Preparación</h2>
+              <ol className="list-decimal list-inside space-y-6 text-gray-700 marker:font-bold">
+                {recipe.steps.map((step, index) => (
+                  <li key={index} className="pl-2">{step}</li>
+                ))}
+              </ol>
+            </div>
+
+          </div>
+
+          {/* Notes */}
+          {recipe.notes && (
+            <div className="mt-12 pt-8 border-t border-gray-200">
+               <h3 className="text-xl font-semibold text-gray-900">Notas del Chef</h3>
+               <p className="mt-4 text-gray-600 italic">{recipe.notes}</p>
+            </div>
+          )}
+
+        </div>
+      </div>
+
+      {/* 2. Add the Comments component here, passing the recipe ID */}
+      {id && <Comments recipeId={id} />}
+
+      <Footer />
+    </PageTransition>
+  );
 }
-
