@@ -1,4 +1,3 @@
-import Header from "./components/header";
 import Hero from "./components/hero";
 import IntroGrid from "./components/introgrid"
 import ImageMosaic from "./components/imagemosaic";
@@ -12,7 +11,6 @@ import Footer from "./components/footer";
 function App() {
   return (
     <>
-    <Header />
     <Hero /> 
     <IntroGrid />
     <ImageMosaic/>
