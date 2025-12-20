@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import Footer from "./components/footer";
 import PageTransition from "./components/pagetransition";
-import Comments from "./components/comments"; // 1. Import the new Comments component
+import Comments from "./components/comments";
+import RecipeSkeleton from "./components/recipeskeleton"; // 1. Import the skeleton component
 
 // Define a type for the recipe object
 type Recipe = {
@@ -30,6 +31,9 @@ export default function RecipeDetail() {
 
       try {
         setLoading(true);
+        // Simulate a slightly longer loading time to see the skeleton
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         const { data, error } = await supabase
           .from('recipes')
           .select('*')
@@ -56,8 +60,14 @@ export default function RecipeDetail() {
     fetchRecipe();
   }, [id]);
 
+  // 2. Use the RecipeSkeleton component when loading
   if (loading) {
-    return <div className="text-center py-20">Cargando receta...</div>;
+    return (
+      <PageTransition>
+        <RecipeSkeleton />
+        <Footer />
+      </PageTransition>
+    );
   }
 
   if (error || !recipe) {
@@ -126,7 +136,6 @@ export default function RecipeDetail() {
         </div>
       </div>
 
-      {/* 2. Add the Comments component here, passing the recipe ID */}
       {id && <Comments recipeId={id} />}
 
       <Footer />
