@@ -1,55 +1,56 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { supabase } from "../lib/supabase";
-import Footer from "./components/footer";
-import PageTransition from "./components/pagetransition";
-import Comments from "./components/comments";
-import RecipeSkeleton from "./components/recipeskeleton"; // 1. Import the skeleton component
 
-// Define a type for the recipe object
-type Recipe = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  time: string;
-  difficulty: string;
-  ingredients: string[]; // Stored as JSONB, parsed as string array
-  steps: string[]; // Stored as JSONB, parsed as string array
-  notes: string;
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
+import PageTransition from './components/pagetransition';
+import { ChefHat, Clock, Users, BarChart, Edit, Trash2 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import type { Recipe } from './types';
+
+// A much simpler component to render lists of content (ingredients or steps)
+const ContentSection = ({ title, items, listType = 'ol' }: { title: string, items: string[], listType?: 'ul' | 'ol' }) => {
+  if (!items || items.length === 0) return null;
+
+  const ListComponent = listType;
+  const listItemClasses = listType === 'ul' 
+    ? "text-stone-700 leading-relaxed list-disc list-inside"
+    : "text-stone-700 leading-relaxed list-decimal list-inside";
+
+  return (
+    <div>
+      <h2 className="font-serif text-2xl text-stone-800 border-b-2 border-orange-200 pb-2 mb-4">{title}</h2>
+      <ListComponent className="space-y-4">
+        {items.map((item, index) => (
+          <li key={index} className={listItemClasses}>
+            {item}
+          </li>
+        ))}
+      </ListComponent>
+    </div>
+  );
 };
 
 export default function RecipeDetail() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRecipe = async () => {
-      if (!id) return;
+      setLoading(true);
+      if (!id) {
+        setError("No se ha proporcionado un ID de receta.");
+        setLoading(false);
+        return;
+      }
 
       try {
-        setLoading(true);
-        // Simulate a slightly longer loading time to see the skeleton
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-        const { data, error } = await supabase
-          .from('recipes')
-          .select('*')
-          .eq('id', id)
-          .single();
-
-        if (error) {
-          throw new Error(`No se pudo encontrar la receta: ${error.message}`);
-        }
-
-        if (data) {
-          setRecipe(data);
-        } else {
-          throw new Error("Receta no encontrada.");
-        }
-
+        const { data, error: fetchError } = await supabase.from('recipes').select('*').eq('id', id).single();
+        if (fetchError) throw new Error("No se pudo encontrar la receta solicitada.");
+        setRecipe(data as any);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -60,85 +61,71 @@ export default function RecipeDetail() {
     fetchRecipe();
   }, [id]);
 
-  // 2. Use the RecipeSkeleton component when loading
-  if (loading) {
-    return (
-      <PageTransition>
-        <RecipeSkeleton />
-        <Footer />
-      </PageTransition>
-    );
-  }
+  const handleDelete = async () => {
+    if (!recipe || !user || user.id !== recipe.user_id) return;
+    const isConfirmed = window.confirm("¿Estás seguro de que quieres eliminar esta receta? Esta acción no se puede deshacer.");
+    if (isConfirmed) {
+      const { error: deleteError } = await supabase.from('recipes').delete().match({ id: recipe.id });
+      if (deleteError) {
+        alert("Error eliminando la receta: " + deleteError.message);
+      } else {
+        navigate('/my-recipes');
+      }
+    }
+  };
 
-  if (error || !recipe) {
-    return (
-      <div className="text-center py-20 text-red-600">
-        <h1 className="text-2xl font-bold">Error</h1>
-        <p>{error || "No se pudo cargar la receta."}</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="flex justify-center items-center h-screen"><p>Cargando receta...</p></div>;
+  if (error) return <div className="flex justify-center items-center h-screen"><p className="text-red-500 font-semibold">{error}</p></div>;
+  if (!recipe) return <div className="flex justify-center items-center h-screen"><p>Receta no encontrada.</p></div>;
+
+  const isOwner = user && user.id === recipe.user_id;
+  const totalTime = (recipe.prep_time || 0) + (recipe.cook_time || 0);
+
+  const DetailItem = ({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value: any }) => (
+    <div className="flex flex-col items-center justify-center bg-orange-50 p-4 rounded-lg text-center shadow-sm">
+        <Icon className="h-8 w-8 text-orange-500 mb-2" />
+        <span className="text-sm text-stone-600 font-medium">{label}</span>
+        <span className="text-lg font-bold text-stone-800 capitalize">{value || 'N/A'}</span>
+    </div>
+  );
 
   return (
     <PageTransition>
-      <div className="bg-white pt-12 sm:pt-20">
-        <div className="mx-auto max-w-3xl px-6 lg:px-8">
+      <div className="bg-white py-12 md:py-20">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="text-center mb-10">
+            <div className="flex justify-center items-center gap-4 mb-4">
+              {recipe.category && <p className="text-orange-600 font-semibold">{recipe.category.toUpperCase()}</p>}
+              {isOwner && (
+                <div className="flex items-center gap-2 border-l pl-4 ml-2">
+                  <Link to={`/edit-recipe/${recipe.id}`} title="Editar Receta" className="p-2 rounded-full hover:bg-stone-100 transition-colors"><Edit className="h-5 w-5 text-stone-600" /></Link>
+                  <button onClick={handleDelete} title="Eliminar Receta" className="p-2 rounded-full hover:bg-stone-100 transition-colors"><Trash2 className="h-5 w-5 text-red-500" /></button>
+                </div>
+              )}
+            </div>
+            <h1 className="font-serif text-4xl md:text-6xl text-stone-900">{recipe.title}</h1>
+            <p className="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">{recipe.description}</p>
+          </div>
+
+          {recipe.image && <div className="mb-12 rounded-xl overflow-hidden shadow-2xl aspect-video"><img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" /></div>}
           
-          {/* Header */}
-          <div className="text-center mb-12">
-            <p className="text-base font-semibold leading-7 text-[var(--text)]-600">{recipe.difficulty} &middot; {recipe.time}</p>
-            <h1 className="mt-2 text-4xl tracking-tight text-gray-900 sm:text-5xl font-serif">
-              {recipe.title}
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
-              {recipe.description}
-            </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <DetailItem icon={Clock} label="Tiempo" value={totalTime > 0 ? `${totalTime} min` : 'N/A'} />
+            <DetailItem icon={ChefHat} label="Dificultad" value={recipe.difficulty} />
+            <DetailItem icon={Users} label="Porciones" value={recipe.servings} />
+            <DetailItem icon={BarChart} label="Categoría" value={recipe.category} />
           </div>
 
-          {/* Image */}
-          <div className="aspect-[16/9] sm:aspect-[2/1] lg:aspect-[3/2] w-full overflow-hidden rounded-2xl shadow-lg mb-12">
-            <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="md:col-span-1">
+              <ContentSection title="Ingredientes" items={recipe.ingredients} listType="ul" />
+            </div>
+            <div className="md:col-span-2">
+              <ContentSection title="Instrucciones" items={recipe.steps} listType="ol" />
+            </div>
           </div>
-
-          {/* Main Content: Ingredients & Steps */}
-          <div className="flex flex-col md:flex-row gap-12">
-
-            {/* Ingredients */}
-            <div className="md:w-1/3">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">Ingredientes</h2>
-              <ul className="list-disc list-inside space-y-2 text-gray-700">
-                {recipe.ingredients.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Steps */}
-            <div className="md:w-2/3">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">Preparación</h2>
-              <ol className="list-decimal list-inside space-y-6 text-gray-700 marker:font-bold">
-                {recipe.steps.map((step, index) => (
-                  <li key={index} className="pl-2">{step}</li>
-                ))}
-              </ol>
-            </div>
-
-          </div>
-
-          {/* Notes */}
-          {recipe.notes && (
-            <div className="mt-12 pt-8 border-t border-gray-200">
-               <h3 className="text-xl font-semibold text-gray-900">Notas del Chef</h3>
-               <p className="mt-4 text-gray-600 italic">{recipe.notes}</p>
-            </div>
-          )}
-
         </div>
       </div>
-
-      {id && <Comments recipeId={id} />}
-
-      <Footer />
     </PageTransition>
   );
 }

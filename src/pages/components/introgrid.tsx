@@ -1,48 +1,49 @@
+import { motion } from "framer-motion";
+import { Speech, Sparkles, Users } from "lucide-react";
+
+const features = [
+  {
+    icon: <Speech size={24} className="text-orange-500" />,
+    title: "Honesta",
+    description: "Recetas reales, sin filtros ni adornos. Solo cocina auténtica.",
+  },
+  {
+    icon: <Sparkles size={24} className="text-orange-500" />,
+    title: "Artística",
+    description: "La belleza en cada plato. Composiciones que inspiran y deleitan.",
+  },
+  {
+    icon: <Users size={24} className="text-orange-500" />,
+    title: "Colaborativa",
+    description: "Una comunidad que comparte, aprende y crece junta en la cocina.",
+  },
+];
 
 export default function IntroGrid() {
-    return (
-      <section className="bg-[var(--bg2)] py-24 h-full rounded-4xl ml-2 mr-2 mt-2">
-        <div className="mx-auto max-w-6xl px-6">
-  
-          <div className="mb-16 w-full flex flex-col items-center justify-center">
-            <h2 className="font-serif text-5xl text-center">
-              no es un recetario
-            </h2>
-            <p className="mt-4 text-lg opacity-70">
-              es un lugar donde la gente cocina, pregunta, se equivoca y sigue
-            </p>
-          </div>
-  
-          <div className="grid gap-8 md:grid-cols-3">
-  
-            <div className="rounded-3xl bg-[var(--tarjeta-2)] p-8">
-              <img src="/assets/plato1.png" alt="" />
-              <h3 className="text-2xl font-bold text-center">Explorar</h3>
-              <p className="mt-3 opacity-70">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque, molestiae! Voluptatum voluptas corporis culpa consequuntur.
+  return (
+    <motion.section 
+      initial={{ y: 50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.3 }}
+      className="relative z-10 -mt-20 mx-auto max-w-5xl mb-24"
+    >
+      <div className="bg-white/60 dark:bg-black/50 backdrop-blur-lg rounded-3xl shadow-xl p-8 md:p-12 border border-white/20">
+        <div className="grid md:grid-cols-3 gap-10 text-center">
+          {features.map((feature, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <div className="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center mb-4 ring-2 ring-orange-200">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-semibold text-stone-800 dark:text-white">
+                {feature.title}
+              </h3>
+              <p className="mt-2 text-stone-600 dark:text-stone-300 text-sm">
+                {feature.description}
               </p>
             </div>
-  
-            <div className="rounded-3xl bg-[var(--tarjeta-1)] p-8">
-              <img src="/assets/plato1.png" alt="" />
-              <h3 className="text-2xl font-bold text-center">preguntar</h3>
-              <p className="mt-3 opacity-70">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque laborum fugiat magnam temporibus eum ut.
-              </p>
-            </div>
-  
-            <div className="rounded-[10%] bg-[var(--tarjeta-2)] bg-600 p-8">
-              <img src="/assets/plato1.png" alt="" />
-              <h3 className="text-2xl font-bold text-center">compartir</h3>
-              <p className="mt-3 opacity-70">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque non doloribus expedita! Earum, similique rerum?
-              </p>
-            </div>
-  
-          </div>
-  
+          ))}
         </div>
-      </section>
-    )
-  }
-  
+      </div>
+    </motion.section>
+  );
+}

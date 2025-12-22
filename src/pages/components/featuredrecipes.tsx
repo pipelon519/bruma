@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Link } from 'react-router-dom';
@@ -14,7 +15,6 @@ export default function FeaturedRecipes() {
     const fetchRecipes = async () => {
       try {
         setLoading(true);
-        // Fetch only the first 4 recipes, ordered by creation date
         const { data, error } = await supabase
           .from('recipes')
           .select('*')
@@ -45,7 +45,6 @@ export default function FeaturedRecipes() {
     >
       <section className="py-28 bg-[var(--bg)]">
         <div className="mx-auto max-w-6xl px-6">
-          {/* Título */}
           <div className="mb-20 text-center">
             <h2 className="font-serif text-5xl md:text-6xl">
               recetas destacadas
@@ -55,23 +54,20 @@ export default function FeaturedRecipes() {
             </p>
           </div>
 
-          {/* Recetas Content */}
           <div className="flex flex-col gap-32">
             {loading ? (
-              // Show skeletons while loading
               <>
                 <FeaturedRecipeSkeleton />
                 <FeaturedRecipeSkeleton />
               </>
             ) : error ? (
-              // Show error message if something fails
               <div className="text-center text-red-500">
                 <p>{error}</p>
               </div>
             ) : (
-              // Render actual recipes once loaded
               recipes.map((recipe, index) => {
                 const reverse = index % 2 !== 0;
+                const totalTime = (recipe.prep_time || 0) + (recipe.cook_time || 0);
 
                 return (
                   <div
@@ -80,12 +76,11 @@ export default function FeaturedRecipes() {
                       reverse ? 'md:flex-row-reverse' : ''
                     }`}
                   >
-                    {/* Imagen */}
                     <div className={`${reverse ? 'md:order-2' : ''}`}>
                       <Link to={`/recipe/${recipe.id}`}>
                         <div className="aspect-[4/5] overflow-hidden rounded-3xl bg-black/5 dark:bg-white/5 transition-transform duration-300 hover:scale-105">
                           <img
-                            src={recipe.image}
+                            src={recipe.image || '/assets/recetas/placeholder.jpg'}
                             alt={recipe.title}
                             className="h-full w-full object-cover"
                           />
@@ -93,21 +88,17 @@ export default function FeaturedRecipes() {
                       </Link>
                     </div>
 
-                    {/* Texto */}
                     <div className={`${reverse ? 'md:order-1' : ''}`}>
                       <h3 className="font-serif text-4xl md:text-5xl leading-tight">
                         {recipe.title}
                       </h3>
-
                       <p className="mt-6 text-lg opacity-75 max-w-md">
                         {recipe.description}
                       </p>
-
                       <div className="mt-8 flex gap-6 text-sm opacity-70">
-                        <span>⏱ {recipe.time}</span>
-                        <span>🔥 {recipe.difficulty}</span>
+                        <span>⏱ {totalTime > 0 ? `${totalTime} min` : 'N/A'}</span>
+                        <span>🔥 {recipe.difficulty || 'N/A'}</span>
                       </div>
-
                       <Link to={`/recipe/${recipe.id}`}>
                         <button className="mt-10 inline-block rounded-full border border-current px-8 py-4 text-sm tracking-wide hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">
                           ver receta

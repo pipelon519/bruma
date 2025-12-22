@@ -1,5 +1,6 @@
 import Hero from "./components/hero"
 import IntroGrid from "./components/introgrid"
+import CategoriesGrid from "./components/categoriesgrid"
 import ImageMosaic from "./components/imagemosaic"
 import FeaturedRecipes from "./components/featuredrecipes"
 import LoginSection from "./components/loginsection"
@@ -11,6 +12,7 @@ export default function HomePage() {
     <PageTransition>
       <Hero />
       <IntroGrid />
+      <CategoriesGrid />
       <ImageMosaic />
       <FeaturedRecipes />
       <LoginSection />
