@@ -12,78 +12,49 @@ Crear una plataforma de recetas moderna, intuitiva y comunitaria donde los usuar
 
 ## ✅ Características Implementadas
 
-A fecha de hoy, la aplicación cuenta con las siguientes funcionalidades básicas, todas conectadas a un backend de Supabase:
+A fecha de hoy, la aplicación cuenta con las siguientes funcionalidades, todas conectadas a un backend de Supabase:
 
-- **Navegación de Recetas:**
-  - Página principal que muestra una selección de recetas.
-  - Página de categorías para explorar recetas por tipo (pastas, postres, etc.).
-  - Página de detalle de receta individual.
-- **Base de Datos:**
-  - Creación de la tabla `recipes` para almacenar toda la información de las recetas.
-  - Creación de la tabla `comments` para los comentarios.
-- **Autenticación y Comentarios:**
-  - Sistema de registro e inicio de sesión de usuarios con Supabase Auth.
-  - Sección de comentarios en cada receta que permite a los usuarios autenticados publicar sus opiniones.
+- **Autenticación Completa:** Sistema de registro, inicio de sesión y persistencia de sesión.
+- **Gestión de Recetas:** Los usuarios pueden crear, ver y explorar recetas.
+- **Búsqueda Avanzada:** Funcionalidad para buscar recetas por nombre, categoría o ingredientes.
+- **Favoritos:** Los usuarios pueden guardar y ver sus recetas preferidas.
+- **Comentarios:** Sección de comentarios interactiva en cada receta.
+- **Página Principal Dinámica:** El contenido de la página de inicio se adapta si el usuario ha iniciado sesión.
+- **Navegación por Categorías:** Una sección visual para explorar recetas por categorías principales.
 
 ---
 
 ## 🗺️ Hoja de Ruta de Desarrollo
 
-Esta hoja de ruta está basada en la visión del usuario, ordenada por prioridad para asegurar la construcción de una aplicación robusta y de alta calidad.
+Esta hoja de ruta está basada en la visión del usuario, ordenada por prioridad.
 
-### 🧱 NIVEL 1 · FUNDAMENTOS SÓLIDOS (Prioridad Inmediata)
+### ✨ NIVEL 1 · FUNCIONALIDADES SOCIALES
 
--   [ ] **1. Persistencia de Sesión:**
-    -   [ ] Mantener la sesión del usuario al recargar la página.
-    -   [ ] Manejar el logout de forma global en toda la aplicación.
-    -   [ ] Redirecciones inteligentes (tras login, volver a la página anterior).
--   [ ] **2. Estados de Carga y Errores:**
-    -   [ ] Implementar componentes de carga (skeletons/spinners) en vistas de datos.
-    -   [ ] Mostrar mensajes de error claros y amigables para el usuario.
--   [ ] **3. Validaciones (Frontend y Backend):**
-    -   [ ] Validar formato de email.
-    -   [ ] Impedir envío de comentarios vacíos o excesivamente largos.
-    -   [ ] Deshabilitar botones de envío tras el primer clic para evitar duplicados.
+- [🚧] **1. Likes / Reacciones:** en recetas y/o comentarios. *(En progreso)*
+- [ ] **2. Perfil de Usuario:** Página de perfil con nombre, avatar, y las recetas que ha creado/le han gustado.
+- [ ] **3. Sistema de Permisos:** Permitir que un usuario solo pueda borrar/editar sus propios comentarios o recetas.
 
-### ✨ NIVEL 2 · EXPERIENCIA DE USUARIO
+### 🧪 NIVEL 2 · CALIDAD Y ROBUSTEZ
 
--   [ ] **4. Perfil de Usuario:**
-    -   [ ] Página de perfil con nombre, avatar y fecha de registro.
-    -   [ ] Funcionalidad para editar el perfil.
--   [ ] **5. Sistema de Permisos:**
-    -   [ ] Permitir que un usuario solo pueda borrar/editar sus propios comentarios.
--   [ ] **6. Feedback Visual Inmediato (UI Optimista):**
-    -   [ ] Añadir/eliminar comentarios de la UI al instante, sin esperar la recarga.
+- [ ] **4. Estados de Carga y Errores:** Implementar componentes de carga (skeletons/spinners) y mostrar mensajes de error amigables.
+- [ ] **5. Validaciones (Frontend y Backend):** Impedir envío de datos vacíos o incorrectos.
+- [ ] **6. Logs y Manejo de Errores:** Centralizar la captura de errores para facilitar la depuración.
 
-### 🔐 NIVEL 3 · SEGURIDAD
+### 🔐 NIVEL 3 · SEGURIDAD Y OPTIMIZACIÓN
 
--   [ ] **7. Row Level Security (RLS) en Supabase:**
-    -   [ ] Activar RLS en todas las tablas sensibles.
-    -   [ ] Definir políticas para que los usuarios solo puedan modificar sus propios datos.
--   [ ] **8. Rate Limiting Básico:**
-    -   [ ] Investigar e implementar límites para evitar spam y ataques de fuerza bruta.
-
-### 🚀 NIVEL 4 · FUNCIONALIDADES "ENGANCHE"
-
--   [ ] **9. Likes / Reacciones:** en recetas y/o comentarios.
--   [ ] **10. Búsqueda:** por nombre, categoría o ingredientes.
--   [ ] **11. Favoritos:** permitir a los usuarios guardar sus recetas preferidas.
-
-### 🧪 NIVEL 5 · CALIDAD
-
--   [ ] **12. Logs y Manejo de Errores:** centralizar la captura de errores.
--   [ ] **13. Accesibilidad (A11Y):** asegurar navegación por teclado y contrastes adecuados.
--   [ ] **14. SEO Básico:** títulos y metadescripciones dinámicas.
+- [ ] **7. Row Level Security (RLS) en Supabase:** Definir políticas para que los usuarios solo puedan modificar sus propios datos.
+- [ ] **8. Accesibilidad (A11Y):** Asegurar navegación por teclado y contrastes adecuados.
+- [ ] **9. SEO Básico:** Títulos y metadescripciones dinámicas para mejorar el posicionamiento en buscadores.
 
 ---
 
-## 🎯 Tarea Actual: Implementar Persistencia de Sesión
+## 🎯 Tarea Actual: Implementar "Likes" en Recetas
 
-**Objetivo:** Solucionar el problema de que la sesión del usuario no persiste al recargar la página.
+**Objetivo:** Implementar un sistema que permita a los usuarios dar 'Me gusta' a las recetas, proporcionando feedback social y ayudando a destacar el contenido más popular.
 
 **Plan:**
 
-1.  **Centralizar el estado de la sesión:** Modificar el componente `Header.tsx` para que se encargue de gestionar el estado de autenticación del usuario.
-2.  **Usar `onAuthStateChange`:** Implementar un listener de Supabase que se active al cargar la página y cada vez que el estado de autenticación cambie (login/logout).
-3.  **Renderizado Condicional:** Actualizar el Header para que muestre el nombre del usuario y un botón de "Logout" si la sesión está activa, o los botones de "Login/Register" si no lo está.
-4.  **Implementar Logout:** Asegurarse de que el botón de "Logout" llame a la función `supabase.auth.signOut()`.
+1.  **Crear Tabla `recipe_likes`:** Añadir una nueva tabla en la base de datos para registrar los likes, con columnas para `recipe_id` y `user_id`.
+2.  **Crear Componente `LikeButton`:** Desarrollar un componente de React que muestre el contador de likes y permita al usuario dar/quitar su like.
+3.  **Integrar Botón:** Añadir el `LikeButton` a las tarjetas de recetas y a la página de detalle de la receta.
+4.  **Actualizar Blueprint:** Mantener este documento al día con el progreso de la tarea.

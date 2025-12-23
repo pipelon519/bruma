@@ -6,13 +6,19 @@
   # Use https://search.nixos.org/packages to find packages
   packages = [
     pkgs.nodejs_22
+    pkgs.docker  # Add Docker to the environment
   ];
+
+  # Enable the Docker daemon service
+  services.docker = {
+    enable = true;
+  };
+
   # Sets environment variables in the workspace
   env = {};
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
-      # "vscodevim.vim"
       "google.gemini-cli-vscode-ide-companion"
     ];
     workspace = {

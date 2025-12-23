@@ -6,8 +6,9 @@ import PageTransition from './components/pagetransition';
 import { ChefHat, Clock, Users, BarChart, Edit, Trash2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import type { Recipe } from './types';
+import Comments from './components/comments';
+import FavoriteButton from './components/FavoriteButton'; // 1. Import the new button
 
-// A much simpler component to render lists of content (ingredients or steps)
 const ContentSection = ({ title, items, listType = 'ol' }: { title: string, items: string[], listType?: 'ul' | 'ol' }) => {
   if (!items || items.length === 0) return null;
 
@@ -76,7 +77,7 @@ export default function RecipeDetail() {
 
   if (loading) return <div className="flex justify-center items-center h-screen"><p>Cargando receta...</p></div>;
   if (error) return <div className="flex justify-center items-center h-screen"><p className="text-red-500 font-semibold">{error}</p></div>;
-  if (!recipe) return <div className="flex justify-center items-center h-screen"><p>Receta no encontrada.</p></div>;
+  if (!recipe || !id) return <div className="flex justify-center items-center h-screen"><p>Receta no encontrada.</p></div>;
 
   const isOwner = user && user.id === recipe.user_id;
   const totalTime = (recipe.prep_time || 0) + (recipe.cook_time || 0);
@@ -96,6 +97,10 @@ export default function RecipeDetail() {
           <div className="text-center mb-10">
             <div className="flex justify-center items-center gap-4 mb-4">
               {recipe.category && <p className="text-orange-600 font-semibold">{recipe.category.toUpperCase()}</p>}
+              
+              {/* 2. Add FavoriteButton here, visible to all logged-in users */}
+              {user && <FavoriteButton recipeId={id} />}
+
               {isOwner && (
                 <div className="flex items-center gap-2 border-l pl-4 ml-2">
                   <Link to={`/edit-recipe/${recipe.id}`} title="Editar Receta" className="p-2 rounded-full hover:bg-stone-100 transition-colors"><Edit className="h-5 w-5 text-stone-600" /></Link>
@@ -126,6 +131,7 @@ export default function RecipeDetail() {
           </div>
         </div>
       </div>
+      <Comments recipeId={id} />
     </PageTransition>
   );
 }

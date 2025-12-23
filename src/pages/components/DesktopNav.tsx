@@ -37,6 +37,7 @@ function ProfileMenu({ user, signOut }: { user: User; signOut: () => Promise<voi
           >
             <NavLink to="/profile" className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-orange-50" onClick={() => setIsOpen(false)}>Mi Perfil</NavLink>
             <NavLink to="/my-recipes" className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-orange-50" onClick={() => setIsOpen(false)}>Mis Recetas</NavLink>
+            <NavLink to="/my-favorites" className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-orange-50" onClick={() => setIsOpen(false)}>Mis Favoritos</NavLink> {/* Add this line */}
             <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-orange-50">Cerrar Sesión</button>
           </motion.div>
         )}

@@ -48,7 +48,10 @@ export default function MobileNav() {
                 <NavLink to="/" end onClick={closeMenu} className={mobileLinkClass}>Inicio</NavLink>
                 <NavLink to="/categories" onClick={closeMenu} className={mobileLinkClass}>Categorías</NavLink>
                 {user && (
+                  <>
                     <NavLink to="/my-recipes" onClick={closeMenu} className={mobileLinkClass}>Mis Recetas</NavLink>
+                    <NavLink to="/my-favorites" onClick={closeMenu} className={mobileLinkClass}>Mis Favoritos</NavLink>
+                  </>
                 )}
               </nav>
               

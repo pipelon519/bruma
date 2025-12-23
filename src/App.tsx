@@ -7,12 +7,13 @@ import CategoryDetailsPage from "./pages/categorydetails";
 import RecipeDetail from "./pages/recipedetails";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
-import SearchPage from "./pages/search";
+import SearchResults from "./pages/SearchResults";
 import MyRecipesPage from "./pages/myrecipes";
 import ProtectedRoute from "./pages/components/ProtectedRoute";
 import AddRecipePage from "./pages/addrecipe";
 import ProfilePage from "./pages/profile";
-import EditRecipePage from "./pages/editrecipe"; // 1. Import EditRecipePage
+import EditRecipePage from "./pages/editrecipe";
+import MyFavorites from "./pages/MyFavorites"; // 1. Import MyFavorites
 
 export default function App() {
   return (
@@ -28,14 +29,15 @@ export default function App() {
           <Route path="/recipe/:id" element={<RecipeDetail />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="/search" element={<SearchResults />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
             <Route path="/my-recipes" element={<MyRecipesPage />} />
+            <Route path="/my-favorites" element={<MyFavorites />} /> {/* 2. Add MyFavorites Route */}
             <Route path="/add-recipe" element={<AddRecipePage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/edit-recipe/:id" element={<EditRecipePage />} /> {/* 2. Add EditRecipePage Route */}
+            <Route path="/edit-recipe/:id" element={<EditRecipePage />} />
           </Route>
         </Routes>
       </main>
